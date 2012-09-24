@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskLocalService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskLocalServiceImpl" />
+	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskServiceImpl" />
+	<bean id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskPersistence" class="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskSegmentLocalServiceImpl" />
+	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskSegmentService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskSegmentServiceImpl" />
+	<bean id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskSegmentPersistence" class="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskSegmentPersistenceImpl" parent="basePersistence" />
+</beans>

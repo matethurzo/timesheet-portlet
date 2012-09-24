@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.1.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_1_0.dtd">
+<service-builder package-path="com.liferay.portlet.timesheet">
+	<author>Mate Thurzo</author>
+	<namespace>TS</namespace>
+
+	<entity name="TimesheetTask" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		
+		 <column name="taskId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="assetCategoryId" type="long" />
+		<column name="assetTagId" type="long" />
+		<column name="name" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="taskId" />
+		</order>
+	</entity>
+
+	<entity name="TimesheetTaskSegment" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="segmentId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="taskId" type="long" />
+		<column name="startDate" type="Date" />
+		<column name="endDate" type="Date" />
+        
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="segmentId" />
+		</order>
+	</entity>
+
+	<exceptions>
+		<exception></exception>
+	</exceptions>
+</service-builder>
