@@ -49,8 +49,4 @@
 			<order-column name="segmentId" />
 		</order>
 	</entity>
-
-	<exceptions>
-		<exception></exception>
-	</exceptions>
 </service-builder>

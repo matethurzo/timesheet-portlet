@@ -246,4 +246,7 @@ public interface TimesheetTaskLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public void addTask(com.liferay.portlet.timesheet.model.TimesheetTask task)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

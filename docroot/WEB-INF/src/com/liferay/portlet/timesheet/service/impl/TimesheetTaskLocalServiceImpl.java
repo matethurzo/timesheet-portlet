@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.timesheet.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.service.base.TimesheetTaskLocalServiceBaseImpl;
 
@@ -40,8 +41,6 @@ public class TimesheetTaskLocalServiceImpl
 	 */
 
 	public void addTask(TimesheetTask task) throws PortalException {
-		if (task == null) {
-			//throw new 
-		}
+		return;
 	}
 }

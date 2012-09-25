@@ -111,6 +111,12 @@ public class TimesheetTaskLocalServiceClpInvoker {
 		_methodName45 = "setBeanIdentifier";
 
 		_methodParameterTypes45 = new String[] { "java.lang.String" };
+
+		_methodName50 = "addTask";
+
+		_methodParameterTypes50 = new String[] {
+				"com.liferay.portlet.timesheet.model.TimesheetTask"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -212,6 +218,11 @@ public class TimesheetTaskLocalServiceClpInvoker {
 			TimesheetTaskLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+			TimesheetTaskLocalServiceUtil.addTask((com.liferay.portlet.timesheet.model.TimesheetTask)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -251,4 +262,6 @@ public class TimesheetTaskLocalServiceClpInvoker {
 	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
 }

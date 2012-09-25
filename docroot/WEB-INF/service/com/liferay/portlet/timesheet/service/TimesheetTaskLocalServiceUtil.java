@@ -273,6 +273,12 @@ public class TimesheetTaskLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void addTask(
+		com.liferay.portlet.timesheet.model.TimesheetTask task)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addTask(task);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

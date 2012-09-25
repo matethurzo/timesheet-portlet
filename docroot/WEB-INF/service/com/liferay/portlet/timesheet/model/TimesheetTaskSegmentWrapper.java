@@ -213,7 +213,8 @@ public class TimesheetTaskSegmentWrapper implements TimesheetTaskSegment,
 		return new TimesheetTaskSegmentWrapper((TimesheetTaskSegment)_timesheetTaskSegment.clone());
 	}
 
-	public int compareTo(TimesheetTaskSegment timesheetTaskSegment) {
+	public int compareTo(
+		com.liferay.portlet.timesheet.model.TimesheetTaskSegment timesheetTaskSegment) {
 		return _timesheetTaskSegment.compareTo(timesheetTaskSegment);
 	}
 
@@ -222,11 +223,11 @@ public class TimesheetTaskSegmentWrapper implements TimesheetTaskSegment,
 		return _timesheetTaskSegment.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<TimesheetTaskSegment> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.timesheet.model.TimesheetTaskSegment> toCacheModel() {
 		return _timesheetTaskSegment.toCacheModel();
 	}
 
-	public TimesheetTaskSegment toEscapedModel() {
+	public com.liferay.portlet.timesheet.model.TimesheetTaskSegment toEscapedModel() {
 		return new TimesheetTaskSegmentWrapper(_timesheetTaskSegment.toEscapedModel());
 	}
 

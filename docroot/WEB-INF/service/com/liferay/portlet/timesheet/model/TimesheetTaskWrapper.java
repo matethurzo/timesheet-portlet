@@ -332,7 +332,8 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 		return new TimesheetTaskWrapper((TimesheetTask)_timesheetTask.clone());
 	}
 
-	public int compareTo(TimesheetTask timesheetTask) {
+	public int compareTo(
+		com.liferay.portlet.timesheet.model.TimesheetTask timesheetTask) {
 		return _timesheetTask.compareTo(timesheetTask);
 	}
 
@@ -341,11 +342,11 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 		return _timesheetTask.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<TimesheetTask> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portlet.timesheet.model.TimesheetTask> toCacheModel() {
 		return _timesheetTask.toCacheModel();
 	}
 
-	public TimesheetTask toEscapedModel() {
+	public com.liferay.portlet.timesheet.model.TimesheetTask toEscapedModel() {
 		return new TimesheetTaskWrapper(_timesheetTask.toEscapedModel());
 	}
 

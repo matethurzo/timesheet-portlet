@@ -270,6 +270,11 @@ public class TimesheetTaskLocalServiceWrapper
 			arguments);
 	}
 
+	public void addTask(com.liferay.portlet.timesheet.model.TimesheetTask task)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_timesheetTaskLocalService.addTask(task);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

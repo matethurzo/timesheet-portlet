@@ -4,6 +4,5 @@
 <display>
 	<category name="category.sample">
 		<portlet id="timesheet" />
-		<portlet id="timesheetportlet"></portlet>
 	</category>
 </display>

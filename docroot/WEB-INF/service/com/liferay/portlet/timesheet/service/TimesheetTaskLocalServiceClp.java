@@ -112,6 +112,12 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 		_methodName17 = "setBeanIdentifier";
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
+
+		_methodName19 = "addTask";
+
+		_methodParameterTypes19 = new String[] {
+				"com.liferay.portlet.timesheet.model.TimesheetTask"
+			};
 	}
 
 	public com.liferay.portlet.timesheet.model.TimesheetTask addTimesheetTask(
@@ -644,6 +650,30 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	public void addTask(com.liferay.portlet.timesheet.model.TimesheetTask task)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName19,
+				_methodParameterTypes19,
+				new Object[] { ClpSerializer.translateInput(task) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -681,4 +711,6 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
+	private String _methodName19;
+	private String[] _methodParameterTypes19;
 }
