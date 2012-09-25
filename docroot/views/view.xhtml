@@ -11,5 +11,13 @@
 	<h:head />
 	<h:body>
 		<h:outputText value="#{i18n['timesheet-hello-world']}" />
+
+		<aui:form>
+			<h:inputText value="#{timesheetTask.name}" />
+
+			<br />
+
+			<h:commandButton value="#{i18n['submit']}" action="#{timesheetTask.saveTask}" />
+		</aui:form>
 	</h:body>
 </f:view>
