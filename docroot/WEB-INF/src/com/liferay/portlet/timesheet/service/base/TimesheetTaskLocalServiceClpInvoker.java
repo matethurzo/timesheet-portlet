@@ -104,19 +104,31 @@ public class TimesheetTaskLocalServiceClpInvoker {
 				"com.liferay.portlet.timesheet.model.TimesheetTask", "boolean"
 			};
 
-		_methodName44 = "getBeanIdentifier";
+		_methodName46 = "getBeanIdentifier";
 
-		_methodParameterTypes44 = new String[] {  };
+		_methodParameterTypes46 = new String[] {  };
 
-		_methodName45 = "setBeanIdentifier";
+		_methodName47 = "setBeanIdentifier";
 
-		_methodParameterTypes45 = new String[] { "java.lang.String" };
+		_methodParameterTypes47 = new String[] { "java.lang.String" };
 
-		_methodName50 = "addTask";
+		_methodName52 = "addTask";
 
-		_methodParameterTypes50 = new String[] {
-				"com.liferay.portlet.timesheet.model.TimesheetTask"
+		_methodParameterTypes52 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName53 = "getTaskByName";
+
+		_methodParameterTypes53 = new String[] { "java.lang.String" };
+
+		_methodName54 = "updateDuration";
+
+		_methodParameterTypes54 = new String[] { "long", "long" };
+
+		_methodName55 = "search";
+
+		_methodParameterTypes55 = new String[] { "java.util.Date", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -208,19 +220,37 @@ public class TimesheetTaskLocalServiceClpInvoker {
 				((Boolean)arguments[1]).booleanValue());
 		}
 
-		if (_methodName44.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
 			return TimesheetTaskLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			TimesheetTaskLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
-			TimesheetTaskLocalServiceUtil.addTask((com.liferay.portlet.timesheet.model.TimesheetTask)arguments[0]);
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+			return TimesheetTaskLocalServiceUtil.addTask(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+			return TimesheetTaskLocalServiceUtil.getTaskByName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+			return TimesheetTaskLocalServiceUtil.updateDuration(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+			return TimesheetTaskLocalServiceUtil.search((java.util.Date)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -258,10 +288,16 @@ public class TimesheetTaskLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName44;
-	private String[] _methodParameterTypes44;
-	private String _methodName45;
-	private String[] _methodParameterTypes45;
-	private String _methodName50;
-	private String[] _methodParameterTypes50;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
+	private String _methodName54;
+	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
 }

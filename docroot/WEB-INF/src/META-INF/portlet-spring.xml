@@ -4,6 +4,7 @@
 	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskLocalService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskLocalServiceImpl" />
 	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskServiceImpl" />
 	<bean id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskPersistence" class="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinder" class="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskSegmentLocalServiceImpl" />
 	<bean id="com.liferay.portlet.timesheet.service.TimesheetTaskSegmentService" class="com.liferay.portlet.timesheet.service.impl.TimesheetTaskSegmentServiceImpl" />
 	<bean id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskSegmentPersistence" class="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskSegmentPersistenceImpl" parent="basePersistence" />

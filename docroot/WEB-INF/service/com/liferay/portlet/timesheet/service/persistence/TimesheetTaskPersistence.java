@@ -102,6 +102,42 @@ public interface TimesheetTaskPersistence extends BasePersistence<TimesheetTask>
 		long taskId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the timesheet task where name = &#63; or throws a {@link com.liferay.portlet.timesheet.NoSuchTimesheetTaskException} if it could not be found.
+	*
+	* @param name the name
+	* @return the matching timesheet task
+	* @throws com.liferay.portlet.timesheet.NoSuchTimesheetTaskException if a matching timesheet task could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.timesheet.model.TimesheetTask findByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.timesheet.NoSuchTimesheetTaskException;
+
+	/**
+	* Returns the timesheet task where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param name the name
+	* @return the matching timesheet task, or <code>null</code> if a matching timesheet task could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.timesheet.model.TimesheetTask fetchByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the timesheet task where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching timesheet task, or <code>null</code> if a matching timesheet task could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.timesheet.model.TimesheetTask fetchByName(
+		java.lang.String name, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the timesheet tasks.
 	*
 	* @return the timesheet tasks
@@ -145,11 +181,33 @@ public interface TimesheetTaskPersistence extends BasePersistence<TimesheetTask>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the timesheet task where name = &#63; from the database.
+	*
+	* @param name the name
+	* @return the timesheet task that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.timesheet.model.TimesheetTask removeByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.timesheet.NoSuchTimesheetTaskException;
+
+	/**
 	* Removes all the timesheet tasks from the database.
 	*
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of timesheet tasks where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching timesheet tasks
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByName(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,7 +33,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
@@ -75,6 +78,15 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
+			TimesheetTaskModelImpl.FINDER_CACHE_ENABLED,
+			TimesheetTaskImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByName",
+			new String[] { String.class.getName() },
+			TimesheetTaskModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
+			TimesheetTaskModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
 			TimesheetTaskModelImpl.FINDER_CACHE_ENABLED,
 			TimesheetTaskImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -96,6 +108,9 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		EntityCacheUtil.putResult(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
 			TimesheetTaskImpl.class, timesheetTask.getPrimaryKey(),
 			timesheetTask);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+			new Object[] { timesheetTask.getName() }, timesheetTask);
 
 		timesheetTask.resetOriginalValues();
 	}
@@ -152,6 +167,8 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(timesheetTask);
 	}
 
 	@Override
@@ -162,7 +179,14 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		for (TimesheetTask timesheetTask : timesheetTasks) {
 			EntityCacheUtil.removeResult(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
 				TimesheetTaskImpl.class, timesheetTask.getPrimaryKey());
+
+			clearUniqueFindersCache(timesheetTask);
 		}
+	}
+
+	protected void clearUniqueFindersCache(TimesheetTask timesheetTask) {
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
+			new Object[] { timesheetTask.getName() });
 	}
 
 	/**
@@ -266,6 +290,8 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 
 		boolean isNew = timesheetTask.isNew();
 
+		TimesheetTaskModelImpl timesheetTaskModelImpl = (TimesheetTaskModelImpl)timesheetTask;
+
 		Session session = null;
 
 		try {
@@ -284,13 +310,33 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (isNew || !TimesheetTaskModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		EntityCacheUtil.putResult(TimesheetTaskModelImpl.ENTITY_CACHE_ENABLED,
 			TimesheetTaskImpl.class, timesheetTask.getPrimaryKey(),
 			timesheetTask);
+
+		if (isNew) {
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+				new Object[] { timesheetTask.getName() }, timesheetTask);
+		}
+		else {
+			if ((timesheetTaskModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						timesheetTaskModelImpl.getOriginalName()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+					new Object[] { timesheetTask.getName() }, timesheetTask);
+			}
+		}
 
 		return timesheetTask;
 	}
@@ -310,9 +356,9 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		timesheetTaskImpl.setUserName(timesheetTask.getUserName());
 		timesheetTaskImpl.setCreateDate(timesheetTask.getCreateDate());
 		timesheetTaskImpl.setModifiedDate(timesheetTask.getModifiedDate());
-		timesheetTaskImpl.setAssetCategoryId(timesheetTask.getAssetCategoryId());
-		timesheetTaskImpl.setAssetTagId(timesheetTask.getAssetTagId());
 		timesheetTaskImpl.setName(timesheetTask.getName());
+		timesheetTaskImpl.setDescription(timesheetTask.getDescription());
+		timesheetTaskImpl.setDuration(timesheetTask.getDuration());
 
 		return timesheetTaskImpl;
 	}
@@ -414,6 +460,156 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		}
 
 		return timesheetTask;
+	}
+
+	/**
+	 * Returns the timesheet task where name = &#63; or throws a {@link com.liferay.portlet.timesheet.NoSuchTimesheetTaskException} if it could not be found.
+	 *
+	 * @param name the name
+	 * @return the matching timesheet task
+	 * @throws com.liferay.portlet.timesheet.NoSuchTimesheetTaskException if a matching timesheet task could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TimesheetTask findByName(String name)
+		throws NoSuchTimesheetTaskException, SystemException {
+		TimesheetTask timesheetTask = fetchByName(name);
+
+		if (timesheetTask == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("name=");
+			msg.append(name);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTimesheetTaskException(msg.toString());
+		}
+
+		return timesheetTask;
+	}
+
+	/**
+	 * Returns the timesheet task where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching timesheet task, or <code>null</code> if a matching timesheet task could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TimesheetTask fetchByName(String name) throws SystemException {
+		return fetchByName(name, true);
+	}
+
+	/**
+	 * Returns the timesheet task where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param name the name
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching timesheet task, or <code>null</code> if a matching timesheet task could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TimesheetTask fetchByName(String name, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { name };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_NAME,
+					finderArgs, this);
+		}
+
+		if (result instanceof TimesheetTask) {
+			TimesheetTask timesheetTask = (TimesheetTask)result;
+
+			if (!Validator.equals(name, timesheetTask.getName())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_TIMESHEETTASK_WHERE);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAME_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_NAME_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_NAME_NAME_2);
+				}
+			}
+
+			query.append(TimesheetTaskModelImpl.ORDER_BY_JPQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				List<TimesheetTask> list = q.list();
+
+				result = list;
+
+				TimesheetTask timesheetTask = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+						finderArgs, list);
+				}
+				else {
+					timesheetTask = list.get(0);
+
+					cacheResult(timesheetTask);
+
+					if ((timesheetTask.getName() == null) ||
+							!timesheetTask.getName().equals(name)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
+							finderArgs, timesheetTask);
+					}
+				}
+
+				return timesheetTask;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (TimesheetTask)result;
+			}
+		}
 	}
 
 	/**
@@ -532,6 +728,20 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 	}
 
 	/**
+	 * Removes the timesheet task where name = &#63; from the database.
+	 *
+	 * @param name the name
+	 * @return the timesheet task that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TimesheetTask removeByName(String name)
+		throws NoSuchTimesheetTaskException, SystemException {
+		TimesheetTask timesheetTask = findByName(name);
+
+		return remove(timesheetTask);
+	}
+
+	/**
 	 * Removes all the timesheet tasks from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -540,6 +750,71 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 		for (TimesheetTask timesheetTask : findAll()) {
 			remove(timesheetTask);
 		}
+	}
+
+	/**
+	 * Returns the number of timesheet tasks where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the number of matching timesheet tasks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByName(String name) throws SystemException {
+		Object[] finderArgs = new Object[] { name };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_NAME,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TIMESHEETTASK_WHERE);
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAME_NAME_1);
+			}
+			else {
+				if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_NAME_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_NAME_NAME_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (name != null) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -620,9 +895,15 @@ public class TimesheetTaskPersistenceImpl extends BasePersistenceImpl<TimesheetT
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_TIMESHEETTASK = "SELECT timesheetTask FROM TimesheetTask timesheetTask";
+	private static final String _SQL_SELECT_TIMESHEETTASK_WHERE = "SELECT timesheetTask FROM TimesheetTask timesheetTask WHERE ";
 	private static final String _SQL_COUNT_TIMESHEETTASK = "SELECT COUNT(timesheetTask) FROM TimesheetTask timesheetTask";
+	private static final String _SQL_COUNT_TIMESHEETTASK_WHERE = "SELECT COUNT(timesheetTask) FROM TimesheetTask timesheetTask WHERE ";
+	private static final String _FINDER_COLUMN_NAME_NAME_1 = "timesheetTask.name IS NULL";
+	private static final String _FINDER_COLUMN_NAME_NAME_2 = "timesheetTask.name = ?";
+	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(timesheetTask.name IS NULL OR timesheetTask.name = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "timesheetTask.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No TimesheetTask exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No TimesheetTask exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(TimesheetTaskPersistenceImpl.class);

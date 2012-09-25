@@ -114,6 +114,20 @@ public interface TimesheetTaskSegmentModel extends BaseModel<TimesheetTaskSegmen
 	 */
 	public void setEndDate(Date endDate);
 
+	/**
+	 * Returns the duration of this timesheet task segment.
+	 *
+	 * @return the duration of this timesheet task segment
+	 */
+	public long getDuration();
+
+	/**
+	 * Sets the duration of this timesheet task segment.
+	 *
+	 * @param duration the duration of this timesheet task segment
+	 */
+	public void setDuration(long duration);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

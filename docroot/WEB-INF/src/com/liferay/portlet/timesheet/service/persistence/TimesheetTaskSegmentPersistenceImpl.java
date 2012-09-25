@@ -312,6 +312,7 @@ public class TimesheetTaskSegmentPersistenceImpl extends BasePersistenceImpl<Tim
 		timesheetTaskSegmentImpl.setTaskId(timesheetTaskSegment.getTaskId());
 		timesheetTaskSegmentImpl.setStartDate(timesheetTaskSegment.getStartDate());
 		timesheetTaskSegmentImpl.setEndDate(timesheetTaskSegment.getEndDate());
+		timesheetTaskSegmentImpl.setDuration(timesheetTaskSegment.getDuration());
 
 		return timesheetTaskSegmentImpl;
 	}

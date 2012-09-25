@@ -70,11 +70,11 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "assetCategoryId", Types.BIGINT },
-			{ "assetTagId", Types.BIGINT },
-			{ "name", Types.VARCHAR }
+			{ "name", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "duration", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table TS_TimesheetTask (taskId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetCategoryId LONG,assetTagId LONG,name VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table TS_TimesheetTask (taskId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,duration LONG)";
 	public static final String TABLE_SQL_DROP = "drop table TS_TimesheetTask";
 	public static final String ORDER_BY_JPQL = " ORDER BY timesheetTask.taskId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY TS_TimesheetTask.taskId ASC";
@@ -87,7 +87,10 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.portlet.timesheet.model.TimesheetTask"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.portlet.timesheet.model.TimesheetTask"),
+			true);
+	public static long NAME_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -107,9 +110,9 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setAssetCategoryId(soapModel.getAssetCategoryId());
-		model.setAssetTagId(soapModel.getAssetTagId());
 		model.setName(soapModel.getName());
+		model.setDescription(soapModel.getDescription());
+		model.setDuration(soapModel.getDuration());
 
 		return model;
 	}
@@ -173,9 +176,9 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetCategoryId", getAssetCategoryId());
-		attributes.put("assetTagId", getAssetTagId());
 		attributes.put("name", getName());
+		attributes.put("description", getDescription());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -212,22 +215,22 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
-
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
-		}
-
-		Long assetTagId = (Long)attributes.get("assetTagId");
-
-		if (assetTagId != null) {
-			setAssetTagId(assetTagId);
-		}
-
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -237,6 +240,8 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 	}
 
 	public void setTaskId(long taskId) {
+		_columnBitmask = -1L;
+
 		_taskId = taskId;
 	}
 
@@ -290,24 +295,6 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 	}
 
 	@JSON
-	public long getAssetCategoryId() {
-		return _assetCategoryId;
-	}
-
-	public void setAssetCategoryId(long assetCategoryId) {
-		_assetCategoryId = assetCategoryId;
-	}
-
-	@JSON
-	public long getAssetTagId() {
-		return _assetTagId;
-	}
-
-	public void setAssetTagId(long assetTagId) {
-		_assetTagId = assetTagId;
-	}
-
-	@JSON
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -318,7 +305,44 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 	}
 
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
+	}
+
+	@JSON
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -354,9 +378,9 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		timesheetTaskImpl.setUserName(getUserName());
 		timesheetTaskImpl.setCreateDate(getCreateDate());
 		timesheetTaskImpl.setModifiedDate(getModifiedDate());
-		timesheetTaskImpl.setAssetCategoryId(getAssetCategoryId());
-		timesheetTaskImpl.setAssetTagId(getAssetTagId());
 		timesheetTaskImpl.setName(getName());
+		timesheetTaskImpl.setDescription(getDescription());
+		timesheetTaskImpl.setDuration(getDuration());
 
 		timesheetTaskImpl.resetOriginalValues();
 
@@ -415,6 +439,11 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 
 	@Override
 	public void resetOriginalValues() {
+		TimesheetTaskModelImpl timesheetTaskModelImpl = this;
+
+		timesheetTaskModelImpl._originalName = timesheetTaskModelImpl._name;
+
+		timesheetTaskModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -451,10 +480,6 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 			timesheetTaskCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		timesheetTaskCacheModel.assetCategoryId = getAssetCategoryId();
-
-		timesheetTaskCacheModel.assetTagId = getAssetTagId();
-
 		timesheetTaskCacheModel.name = getName();
 
 		String name = timesheetTaskCacheModel.name;
@@ -462,6 +487,16 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		if ((name != null) && (name.length() == 0)) {
 			timesheetTaskCacheModel.name = null;
 		}
+
+		timesheetTaskCacheModel.description = getDescription();
+
+		String description = timesheetTaskCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			timesheetTaskCacheModel.description = null;
+		}
+
+		timesheetTaskCacheModel.duration = getDuration();
 
 		return timesheetTaskCacheModel;
 	}
@@ -480,12 +515,12 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", assetCategoryId=");
-		sb.append(getAssetCategoryId());
-		sb.append(", assetTagId=");
-		sb.append(getAssetTagId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", duration=");
+		sb.append(getDuration());
 		sb.append("}");
 
 		return sb.toString();
@@ -519,16 +554,16 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetTagId</column-name><column-value><![CDATA[");
-		sb.append(getAssetTagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>duration</column-name><column-value><![CDATA[");
+		sb.append(getDuration());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -546,8 +581,10 @@ public class TimesheetTaskModelImpl extends BaseModelImpl<TimesheetTask>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _assetCategoryId;
-	private long _assetTagId;
 	private String _name;
+	private String _originalName;
+	private String _description;
+	private long _duration;
+	private long _columnBitmask;
 	private TimesheetTask _escapedModelProxy;
 }

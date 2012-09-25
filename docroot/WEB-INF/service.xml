@@ -19,15 +19,20 @@
 
 		<!-- Other fields -->
 
-		<column name="assetCategoryId" type="long" />
-		<column name="assetTagId" type="long" />
 		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="duration" type="long" />
 
 		<!-- Order -->
 
 		<order by="asc">
 			<order-column name="taskId" />
 		</order>
+
+		<!-- Finder -->
+		<finder name="Name" return-type="TimesheetTask">
+			<finder-column name="name" />
+		</finder>
 	</entity>
 
 	<entity name="TimesheetTaskSegment" local-service="true" remote-service="true">
@@ -41,6 +46,7 @@
 		<column name="taskId" type="long" />
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
+		<column name="duration" type="long" />
         
 
 		<!-- Order -->
@@ -49,4 +55,9 @@
 			<order-column name="segmentId" />
 		</order>
 	</entity>
+
+	<exceptions>
+		<exception>InvalidTaskSegmentDate</exception>
+		<exception>InvalidTask</exception>
+	</exceptions>
 </service-builder>

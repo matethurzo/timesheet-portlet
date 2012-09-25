@@ -275,6 +275,20 @@ public class TimesheetTaskSegmentLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.portlet.timesheet.model.TimesheetTaskSegment addTaskSegment(
+		long taskId, java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addTaskSegment(taskId, startDate, endDate);
+	}
+
+	public static com.liferay.portlet.timesheet.model.TimesheetTaskSegment updateEndDate(
+		long segmentId, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateEndDate(segmentId, endDate);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

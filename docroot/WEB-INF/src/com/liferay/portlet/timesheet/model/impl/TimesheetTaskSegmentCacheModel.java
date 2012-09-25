@@ -34,7 +34,7 @@ public class TimesheetTaskSegmentCacheModel implements CacheModel<TimesheetTaskS
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{segmentId=");
 		sb.append(segmentId);
@@ -44,6 +44,8 @@ public class TimesheetTaskSegmentCacheModel implements CacheModel<TimesheetTaskS
 		sb.append(startDate);
 		sb.append(", endDate=");
 		sb.append(endDate);
+		sb.append(", duration=");
+		sb.append(duration);
 		sb.append("}");
 
 		return sb.toString();
@@ -69,6 +71,8 @@ public class TimesheetTaskSegmentCacheModel implements CacheModel<TimesheetTaskS
 			timesheetTaskSegmentImpl.setEndDate(new Date(endDate));
 		}
 
+		timesheetTaskSegmentImpl.setDuration(duration);
+
 		timesheetTaskSegmentImpl.resetOriginalValues();
 
 		return timesheetTaskSegmentImpl;
@@ -78,4 +82,5 @@ public class TimesheetTaskSegmentCacheModel implements CacheModel<TimesheetTaskS
 	public long taskId;
 	public long startDate;
 	public long endDate;
+	public long duration;
 }

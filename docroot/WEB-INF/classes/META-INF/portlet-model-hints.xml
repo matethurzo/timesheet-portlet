@@ -7,14 +7,15 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="assetCategoryId" type="long" />
-		<field name="assetTagId" type="long" />
 		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="duration" type="long" />
 	</model>
 	<model name="com.liferay.portlet.timesheet.model.TimesheetTaskSegment">
 		<field name="segmentId" type="long" />
 		<field name="taskId" type="long" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
+		<field name="duration" type="long" />
 	</model>
 </model-hints>

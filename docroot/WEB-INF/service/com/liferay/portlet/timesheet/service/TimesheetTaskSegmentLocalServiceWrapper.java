@@ -273,6 +273,22 @@ public class TimesheetTaskSegmentLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	public com.liferay.portlet.timesheet.model.TimesheetTaskSegment addTaskSegment(
+		long taskId, java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _timesheetTaskSegmentLocalService.addTaskSegment(taskId,
+			startDate, endDate);
+	}
+
+	public com.liferay.portlet.timesheet.model.TimesheetTaskSegment updateEndDate(
+		long segmentId, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _timesheetTaskSegmentLocalService.updateEndDate(segmentId,
+			endDate);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

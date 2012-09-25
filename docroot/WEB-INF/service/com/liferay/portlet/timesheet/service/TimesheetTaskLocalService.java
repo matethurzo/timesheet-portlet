@@ -247,6 +247,25 @@ public interface TimesheetTaskLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void addTask(com.liferay.portlet.timesheet.model.TimesheetTask task)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public com.liferay.portlet.timesheet.model.TimesheetTask addTask(
+		long userId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.timesheet.model.TimesheetTask getTaskByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
+		long taskId, long duration)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> search(
+		java.util.Date date, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

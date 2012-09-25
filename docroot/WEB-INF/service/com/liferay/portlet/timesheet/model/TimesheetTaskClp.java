@@ -72,9 +72,9 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetCategoryId", getAssetCategoryId());
-		attributes.put("assetTagId", getAssetTagId());
 		attributes.put("name", getName());
+		attributes.put("description", getDescription());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -111,22 +111,22 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
-
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
-		}
-
-		Long assetTagId = (Long)attributes.get("assetTagId");
-
-		if (assetTagId != null) {
-			setAssetTagId(assetTagId);
-		}
-
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -178,28 +178,28 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getAssetCategoryId() {
-		return _assetCategoryId;
-	}
-
-	public void setAssetCategoryId(long assetCategoryId) {
-		_assetCategoryId = assetCategoryId;
-	}
-
-	public long getAssetTagId() {
-		return _assetTagId;
-	}
-
-	public void setAssetTagId(long assetTagId) {
-		_assetTagId = assetTagId;
-	}
-
 	public String getName() {
 		return _name;
 	}
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
 	}
 
 	public BaseModel<?> getTimesheetTaskRemoteModel() {
@@ -235,9 +235,9 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
-		clone.setAssetCategoryId(getAssetCategoryId());
-		clone.setAssetTagId(getAssetTagId());
 		clone.setName(getName());
+		clone.setDescription(getDescription());
+		clone.setDuration(getDuration());
 
 		return clone;
 	}
@@ -306,12 +306,12 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", assetCategoryId=");
-		sb.append(getAssetCategoryId());
-		sb.append(", assetTagId=");
-		sb.append(getAssetTagId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", duration=");
+		sb.append(getDuration());
 		sb.append("}");
 
 		return sb.toString();
@@ -345,16 +345,16 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetTagId</column-name><column-value><![CDATA[");
-		sb.append(getAssetTagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>duration</column-name><column-value><![CDATA[");
+		sb.append(getDuration());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -368,8 +368,8 @@ public class TimesheetTaskClp extends BaseModelImpl<TimesheetTask>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _assetCategoryId;
-	private long _assetTagId;
 	private String _name;
+	private String _description;
+	private long _duration;
 	private BaseModel<?> _timesheetTaskRemoteModel;
 }

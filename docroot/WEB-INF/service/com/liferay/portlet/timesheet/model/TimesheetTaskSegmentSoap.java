@@ -36,6 +36,7 @@ public class TimesheetTaskSegmentSoap implements Serializable {
 		soapModel.setTaskId(model.getTaskId());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
+		soapModel.setDuration(model.getDuration());
 
 		return soapModel;
 	}
@@ -123,8 +124,17 @@ public class TimesheetTaskSegmentSoap implements Serializable {
 		_endDate = endDate;
 	}
 
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
+	}
+
 	private long _segmentId;
 	private long _taskId;
 	private Date _startDate;
 	private Date _endDate;
+	private long _duration;
 }

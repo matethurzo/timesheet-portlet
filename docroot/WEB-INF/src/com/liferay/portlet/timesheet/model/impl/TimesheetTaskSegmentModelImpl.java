@@ -65,9 +65,10 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 			{ "segmentId", Types.BIGINT },
 			{ "taskId", Types.BIGINT },
 			{ "startDate", Types.TIMESTAMP },
-			{ "endDate", Types.TIMESTAMP }
+			{ "endDate", Types.TIMESTAMP },
+			{ "duration", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table TS_TimesheetTaskSegment (segmentId LONG not null primary key,taskId LONG,startDate DATE null,endDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table TS_TimesheetTaskSegment (segmentId LONG not null primary key,taskId LONG,startDate DATE null,endDate DATE null,duration LONG)";
 	public static final String TABLE_SQL_DROP = "drop table TS_TimesheetTaskSegment";
 	public static final String ORDER_BY_JPQL = " ORDER BY timesheetTaskSegment.segmentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY TS_TimesheetTaskSegment.segmentId ASC";
@@ -100,6 +101,7 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 		model.setTaskId(soapModel.getTaskId());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
+		model.setDuration(soapModel.getDuration());
 
 		return model;
 	}
@@ -163,6 +165,7 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 		attributes.put("taskId", getTaskId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -191,6 +194,12 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -230,6 +239,15 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 		_endDate = endDate;
 	}
 
+	@JSON
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
@@ -262,6 +280,7 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 		timesheetTaskSegmentImpl.setTaskId(getTaskId());
 		timesheetTaskSegmentImpl.setStartDate(getStartDate());
 		timesheetTaskSegmentImpl.setEndDate(getEndDate());
+		timesheetTaskSegmentImpl.setDuration(getDuration());
 
 		timesheetTaskSegmentImpl.resetOriginalValues();
 
@@ -348,12 +367,14 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 			timesheetTaskSegmentCacheModel.endDate = Long.MIN_VALUE;
 		}
 
+		timesheetTaskSegmentCacheModel.duration = getDuration();
+
 		return timesheetTaskSegmentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{segmentId=");
 		sb.append(getSegmentId());
@@ -363,13 +384,15 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", duration=");
+		sb.append(getDuration());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.timesheet.model.TimesheetTaskSegment");
@@ -391,6 +414,10 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 			"<column><column-name>endDate</column-name><column-value><![CDATA[");
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>duration</column-name><column-value><![CDATA[");
+		sb.append(getDuration());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -405,5 +432,6 @@ public class TimesheetTaskSegmentModelImpl extends BaseModelImpl<TimesheetTaskSe
 	private long _taskId;
 	private Date _startDate;
 	private Date _endDate;
+	private long _duration;
 	private TimesheetTaskSegment _escapedModelProxy;
 }

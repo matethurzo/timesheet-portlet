@@ -42,6 +42,7 @@ import com.liferay.portlet.timesheet.service.TimesheetTaskLocalService;
 import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalService;
 import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentService;
 import com.liferay.portlet.timesheet.service.TimesheetTaskService;
+import com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinder;
 import com.liferay.portlet.timesheet.service.persistence.TimesheetTaskPersistence;
 import com.liferay.portlet.timesheet.service.persistence.TimesheetTaskSegmentPersistence;
 
@@ -334,6 +335,24 @@ public abstract class TimesheetTaskLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the timesheet task finder.
+	 *
+	 * @return the timesheet task finder
+	 */
+	public TimesheetTaskFinder getTimesheetTaskFinder() {
+		return timesheetTaskFinder;
+	}
+
+	/**
+	 * Sets the timesheet task finder.
+	 *
+	 * @param timesheetTaskFinder the timesheet task finder
+	 */
+	public void setTimesheetTaskFinder(TimesheetTaskFinder timesheetTaskFinder) {
+		this.timesheetTaskFinder = timesheetTaskFinder;
+	}
+
+	/**
 	 * Returns the timesheet task segment local service.
 	 *
 	 * @return the timesheet task segment local service
@@ -583,6 +602,8 @@ public abstract class TimesheetTaskLocalServiceBaseImpl
 	protected TimesheetTaskService timesheetTaskService;
 	@BeanReference(type = TimesheetTaskPersistence.class)
 	protected TimesheetTaskPersistence timesheetTaskPersistence;
+	@BeanReference(type = TimesheetTaskFinder.class)
+	protected TimesheetTaskFinder timesheetTaskFinder;
 	@BeanReference(type = TimesheetTaskSegmentLocalService.class)
 	protected TimesheetTaskSegmentLocalService timesheetTaskSegmentLocalService;
 	@BeanReference(type = TimesheetTaskSegmentService.class)

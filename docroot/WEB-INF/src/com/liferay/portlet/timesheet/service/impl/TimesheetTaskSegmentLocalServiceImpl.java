@@ -14,7 +14,15 @@
 
 package com.liferay.portlet.timesheet.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.timesheet.InvalidTaskSegmentDateException;
+import com.liferay.portlet.timesheet.NoSuchTimesheetTaskException;
+import com.liferay.portlet.timesheet.model.TimesheetTask;
+import com.liferay.portlet.timesheet.model.TimesheetTaskSegment;
 import com.liferay.portlet.timesheet.service.base.TimesheetTaskSegmentLocalServiceBaseImpl;
+
+import java.util.Date;
 
 /**
  * The implementation of the timesheet task segment local service.
@@ -32,9 +40,74 @@ import com.liferay.portlet.timesheet.service.base.TimesheetTaskSegmentLocalServi
  */
 public class TimesheetTaskSegmentLocalServiceImpl
 	extends TimesheetTaskSegmentLocalServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil} to access the timesheet task segment local service.
 	 */
+
+	public TimesheetTaskSegment addTaskSegment(
+			long taskId, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		validate(taskId, startDate, endDate);
+
+		long taskSegmentId = counterLocalService.increment();
+
+		TimesheetTaskSegment taskSegment =
+			timesheetTaskSegmentPersistence.create(taskSegmentId);
+
+		taskSegment.setTaskId(taskId);
+		taskSegment.setStartDate(startDate);
+		taskSegment.setEndDate(endDate);
+
+		timesheetTaskSegmentPersistence.update(taskSegment, false);
+
+		return taskSegment;
+	}
+
+	public TimesheetTaskSegment updateEndDate(long segmentId, Date endDate)
+		throws PortalException, SystemException {
+
+		TimesheetTaskSegment taskSegment =
+			timesheetTaskSegmentPersistence.findByPrimaryKey(segmentId);
+
+		taskSegment.setEndDate(endDate);
+
+		long segmentDuration =
+			endDate.getTime() - taskSegment.getStartDate().getTime();
+
+		taskSegment.setDuration(segmentDuration);
+
+		timesheetTaskSegmentPersistence.update(taskSegment, false);
+
+		timesheetTaskLocalService.updateDuration(
+			taskSegment.getTaskId(), segmentDuration);
+
+		return taskSegment;
+	}
+
+	protected void validate(long taskId, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		TimesheetTask timesheetTask =
+			timesheetTaskLocalService.fetchTimesheetTask(taskId);
+
+		if (timesheetTask == null) {
+			throw new NoSuchTimesheetTaskException();
+		}
+
+		if ((startDate == null) || (endDate == null) ||
+			((endDate != null) && (startDate == null))) {
+
+			throw new InvalidTaskSegmentDateException();
+		}
+
+		if ((startDate != null) && (endDate != null) &&
+			!startDate.before(endDate)) {
+
+			throw new InvalidTaskSegmentDateException();
+		}
+	}
+
 }

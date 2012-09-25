@@ -36,9 +36,9 @@ public class TimesheetTaskSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setAssetCategoryId(model.getAssetCategoryId());
-		soapModel.setAssetTagId(model.getAssetTagId());
 		soapModel.setName(model.getName());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setDuration(model.getDuration());
 
 		return soapModel;
 	}
@@ -131,22 +131,6 @@ public class TimesheetTaskSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getAssetCategoryId() {
-		return _assetCategoryId;
-	}
-
-	public void setAssetCategoryId(long assetCategoryId) {
-		_assetCategoryId = assetCategoryId;
-	}
-
-	public long getAssetTagId() {
-		return _assetTagId;
-	}
-
-	public void setAssetTagId(long assetTagId) {
-		_assetTagId = assetTagId;
-	}
-
 	public String getName() {
 		return _name;
 	}
@@ -155,12 +139,28 @@ public class TimesheetTaskSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
+	}
+
 	private long _taskId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _assetCategoryId;
-	private long _assetTagId;
 	private String _name;
+	private String _description;
+	private long _duration;
 }

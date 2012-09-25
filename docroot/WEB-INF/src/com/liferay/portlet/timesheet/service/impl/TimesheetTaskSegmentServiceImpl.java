@@ -32,7 +32,7 @@ import com.liferay.portlet.timesheet.service.base.TimesheetTaskSegmentServiceBas
  */
 public class TimesheetTaskSegmentServiceImpl
 	extends TimesheetTaskSegmentServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskSegmentServiceUtil} to access the timesheet task segment remote service.

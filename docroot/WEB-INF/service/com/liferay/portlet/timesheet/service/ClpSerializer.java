@@ -255,6 +255,16 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.portlet.timesheet.InvalidTaskException")) {
+			return new com.liferay.portlet.timesheet.InvalidTaskException();
+		}
+
+		if (className.equals(
+					"com.liferay.portlet.timesheet.InvalidTaskSegmentDateException")) {
+			return new com.liferay.portlet.timesheet.InvalidTaskSegmentDateException();
+		}
+
+		if (className.equals(
 					"com.liferay.portlet.timesheet.NoSuchTimesheetTaskException")) {
 			return new com.liferay.portlet.timesheet.NoSuchTimesheetTaskException();
 		}

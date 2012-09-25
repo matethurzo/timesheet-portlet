@@ -273,10 +273,32 @@ public class TimesheetTaskLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void addTask(
-		com.liferay.portlet.timesheet.model.TimesheetTask task)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addTask(task);
+	public static com.liferay.portlet.timesheet.model.TimesheetTask addTask(
+		long userId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addTask(userId, name, description);
+	}
+
+	public static com.liferay.portlet.timesheet.model.TimesheetTask getTaskByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTaskByName(name);
+	}
+
+	public static com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
+		long taskId, long duration)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateDuration(taskId, duration);
+	}
+
+	public static java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> search(
+		java.util.Date date, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(date, userId);
 	}
 
 	public static void clearService() {

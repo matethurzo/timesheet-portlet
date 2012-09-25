@@ -18,9 +18,9 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="assetCategoryId" />
-			<basic name="assetTagId" />
 			<basic name="name" />
+			<basic name="description" />
+			<basic name="duration" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -37,6 +37,7 @@
 			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="duration" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

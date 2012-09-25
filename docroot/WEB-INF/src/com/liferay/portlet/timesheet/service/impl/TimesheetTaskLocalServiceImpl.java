@@ -15,8 +15,12 @@
 package com.liferay.portlet.timesheet.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.service.base.TimesheetTaskLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the timesheet task local service.
@@ -34,13 +38,59 @@ import com.liferay.portlet.timesheet.service.base.TimesheetTaskLocalServiceBaseI
  */
 public class TimesheetTaskLocalServiceImpl
 	extends TimesheetTaskLocalServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil} to access the timesheet task local service.
 	 */
 
-	public void addTask(TimesheetTask task) throws PortalException {
+	public TimesheetTask addTask(long userId, String name, String description)
+		throws PortalException, SystemException {
+
+		validate(userId, name);
+
+		long taskId = counterLocalService.increment();
+
+		TimesheetTask timesheetTask = timesheetTaskPersistence.create(taskId);
+
+		timesheetTask.setUserId(userId);
+		timesheetTask.setName(name);
+		timesheetTask.setDescription(description);
+
+		timesheetTaskPersistence.update(timesheetTask, false);
+
+		return timesheetTask;
+	}
+
+	public TimesheetTask getTaskByName(String name)
+		throws PortalException, SystemException {
+
+		return timesheetTaskPersistence.findByName(name);
+	}
+
+	public TimesheetTask updateDuration(long taskId, long duration)
+		throws PortalException, SystemException {
+
+		TimesheetTask timesheetTask = timesheetTaskPersistence.findByPrimaryKey(
+			taskId);
+
+		long newDuration = duration + timesheetTask.getDuration();
+
+		timesheetTask.setDuration(newDuration);
+
+		timesheetTaskPersistence.update(timesheetTask, false);
+
+		return timesheetTask;
+	}
+
+	public List<TimesheetTask> search(Date date, long userId)
+		throws PortalException, SystemException {
+
+		return timesheetTaskFinder.findByC_U(date, userId);
+	}
+
+	protected void validate(long userId, String name) throws PortalException {
 		return;
 	}
+
 }

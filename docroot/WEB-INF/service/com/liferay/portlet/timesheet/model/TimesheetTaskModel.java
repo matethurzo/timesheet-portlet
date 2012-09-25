@@ -147,34 +147,6 @@ public interface TimesheetTaskModel extends BaseModel<TimesheetTask> {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the asset category ID of this timesheet task.
-	 *
-	 * @return the asset category ID of this timesheet task
-	 */
-	public long getAssetCategoryId();
-
-	/**
-	 * Sets the asset category ID of this timesheet task.
-	 *
-	 * @param assetCategoryId the asset category ID of this timesheet task
-	 */
-	public void setAssetCategoryId(long assetCategoryId);
-
-	/**
-	 * Returns the asset tag ID of this timesheet task.
-	 *
-	 * @return the asset tag ID of this timesheet task
-	 */
-	public long getAssetTagId();
-
-	/**
-	 * Sets the asset tag ID of this timesheet task.
-	 *
-	 * @param assetTagId the asset tag ID of this timesheet task
-	 */
-	public void setAssetTagId(long assetTagId);
-
-	/**
 	 * Returns the name of this timesheet task.
 	 *
 	 * @return the name of this timesheet task
@@ -188,6 +160,35 @@ public interface TimesheetTaskModel extends BaseModel<TimesheetTask> {
 	 * @param name the name of this timesheet task
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the description of this timesheet task.
+	 *
+	 * @return the description of this timesheet task
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this timesheet task.
+	 *
+	 * @param description the description of this timesheet task
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the duration of this timesheet task.
+	 *
+	 * @return the duration of this timesheet task
+	 */
+	public long getDuration();
+
+	/**
+	 * Sets the duration of this timesheet task.
+	 *
+	 * @param duration the duration of this timesheet task
+	 */
+	public void setDuration(long duration);
 
 	public boolean isNew();
 

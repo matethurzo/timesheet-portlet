@@ -24,11 +24,12 @@ package com.liferay.portlet.timesheet.model.impl;
  * @author Mate Thurzo
  */
 public class TimesheetTaskSegmentImpl extends TimesheetTaskSegmentBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a timesheet task segment model instance should use the {@link com.liferay.portlet.timesheet.model.TimesheetTaskSegment} interface instead.
 	 */
 	public TimesheetTaskSegmentImpl() {
 	}
+
 }

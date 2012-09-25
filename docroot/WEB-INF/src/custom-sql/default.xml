@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinder.findByC_U">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				TS_TimesheetTask
+		]]>
+	</sql>
+</custom-sql>

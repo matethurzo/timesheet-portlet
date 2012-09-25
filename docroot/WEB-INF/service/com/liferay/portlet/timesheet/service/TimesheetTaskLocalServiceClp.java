@@ -116,8 +116,20 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 		_methodName19 = "addTask";
 
 		_methodParameterTypes19 = new String[] {
-				"com.liferay.portlet.timesheet.model.TimesheetTask"
+				"long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName20 = "getTaskByName";
+
+		_methodParameterTypes20 = new String[] { "java.lang.String" };
+
+		_methodName21 = "updateDuration";
+
+		_methodParameterTypes21 = new String[] { "long", "long" };
+
+		_methodName22 = "search";
+
+		_methodParameterTypes22 = new String[] { "java.util.Date", "long" };
 	}
 
 	public com.liferay.portlet.timesheet.model.TimesheetTask addTimesheetTask(
@@ -650,18 +662,32 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 		throw new UnsupportedOperationException();
 	}
 
-	public void addTask(com.liferay.portlet.timesheet.model.TimesheetTask task)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.portlet.timesheet.model.TimesheetTask addTask(
+		long userId, java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
 		try {
-			_invokableLocalService.invokeMethod(_methodName19,
-				_methodParameterTypes19,
-				new Object[] { ClpSerializer.translateInput(task) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] {
+						userId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(description)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
 			}
 
 			if (t instanceof RuntimeException) {
@@ -672,6 +698,109 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 					" is not a valid exception");
 			}
 		}
+
+		return (com.liferay.portlet.timesheet.model.TimesheetTask)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.portlet.timesheet.model.TimesheetTask getTaskByName(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(name) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.timesheet.model.TimesheetTask)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
+		long taskId, long duration)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { taskId, duration });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portlet.timesheet.model.TimesheetTask)ClpSerializer.translateOutput(returnObj);
+	}
+
+	public java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> search(
+		java.util.Date date, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(date), userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -713,4 +842,10 @@ public class TimesheetTaskLocalServiceClp implements TimesheetTaskLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

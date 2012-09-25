@@ -51,9 +51,9 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetCategoryId", getAssetCategoryId());
-		attributes.put("assetTagId", getAssetTagId());
 		attributes.put("name", getName());
+		attributes.put("description", getDescription());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -89,22 +89,22 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
-
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
-		}
-
-		Long assetTagId = (Long)attributes.get("assetTagId");
-
-		if (assetTagId != null) {
-			setAssetTagId(assetTagId);
-		}
-
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -237,42 +237,6 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 	}
 
 	/**
-	* Returns the asset category ID of this timesheet task.
-	*
-	* @return the asset category ID of this timesheet task
-	*/
-	public long getAssetCategoryId() {
-		return _timesheetTask.getAssetCategoryId();
-	}
-
-	/**
-	* Sets the asset category ID of this timesheet task.
-	*
-	* @param assetCategoryId the asset category ID of this timesheet task
-	*/
-	public void setAssetCategoryId(long assetCategoryId) {
-		_timesheetTask.setAssetCategoryId(assetCategoryId);
-	}
-
-	/**
-	* Returns the asset tag ID of this timesheet task.
-	*
-	* @return the asset tag ID of this timesheet task
-	*/
-	public long getAssetTagId() {
-		return _timesheetTask.getAssetTagId();
-	}
-
-	/**
-	* Sets the asset tag ID of this timesheet task.
-	*
-	* @param assetTagId the asset tag ID of this timesheet task
-	*/
-	public void setAssetTagId(long assetTagId) {
-		_timesheetTask.setAssetTagId(assetTagId);
-	}
-
-	/**
 	* Returns the name of this timesheet task.
 	*
 	* @return the name of this timesheet task
@@ -288,6 +252,42 @@ public class TimesheetTaskWrapper implements TimesheetTask,
 	*/
 	public void setName(java.lang.String name) {
 		_timesheetTask.setName(name);
+	}
+
+	/**
+	* Returns the description of this timesheet task.
+	*
+	* @return the description of this timesheet task
+	*/
+	public java.lang.String getDescription() {
+		return _timesheetTask.getDescription();
+	}
+
+	/**
+	* Sets the description of this timesheet task.
+	*
+	* @param description the description of this timesheet task
+	*/
+	public void setDescription(java.lang.String description) {
+		_timesheetTask.setDescription(description);
+	}
+
+	/**
+	* Returns the duration of this timesheet task.
+	*
+	* @return the duration of this timesheet task
+	*/
+	public long getDuration() {
+		return _timesheetTask.getDuration();
+	}
+
+	/**
+	* Sets the duration of this timesheet task.
+	*
+	* @param duration the duration of this timesheet task
+	*/
+	public void setDuration(long duration) {
+		_timesheetTask.setDuration(duration);
 	}
 
 	public boolean isNew() {

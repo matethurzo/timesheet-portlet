@@ -51,6 +51,7 @@ public class TimesheetTaskSegmentWrapper implements TimesheetTaskSegment,
 		attributes.put("taskId", getTaskId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -78,6 +79,12 @@ public class TimesheetTaskSegmentWrapper implements TimesheetTaskSegment,
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -169,6 +176,24 @@ public class TimesheetTaskSegmentWrapper implements TimesheetTaskSegment,
 	*/
 	public void setEndDate(java.util.Date endDate) {
 		_timesheetTaskSegment.setEndDate(endDate);
+	}
+
+	/**
+	* Returns the duration of this timesheet task segment.
+	*
+	* @return the duration of this timesheet task segment
+	*/
+	public long getDuration() {
+		return _timesheetTaskSegment.getDuration();
+	}
+
+	/**
+	* Sets the duration of this timesheet task segment.
+	*
+	* @param duration the duration of this timesheet task segment
+	*/
+	public void setDuration(long duration) {
+		_timesheetTaskSegment.setDuration(duration);
 	}
 
 	public boolean isNew() {

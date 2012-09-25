@@ -47,12 +47,12 @@ public class TimesheetTaskCacheModel implements CacheModel<TimesheetTask>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", assetCategoryId=");
-		sb.append(assetCategoryId);
-		sb.append(", assetTagId=");
-		sb.append(assetTagId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", duration=");
+		sb.append(duration);
 		sb.append("}");
 
 		return sb.toString();
@@ -85,15 +85,21 @@ public class TimesheetTaskCacheModel implements CacheModel<TimesheetTask>,
 			timesheetTaskImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		timesheetTaskImpl.setAssetCategoryId(assetCategoryId);
-		timesheetTaskImpl.setAssetTagId(assetTagId);
-
 		if (name == null) {
 			timesheetTaskImpl.setName(StringPool.BLANK);
 		}
 		else {
 			timesheetTaskImpl.setName(name);
 		}
+
+		if (description == null) {
+			timesheetTaskImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			timesheetTaskImpl.setDescription(description);
+		}
+
+		timesheetTaskImpl.setDuration(duration);
 
 		timesheetTaskImpl.resetOriginalValues();
 
@@ -105,7 +111,7 @@ public class TimesheetTaskCacheModel implements CacheModel<TimesheetTask>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long assetCategoryId;
-	public long assetTagId;
 	public String name;
+	public String description;
+	public long duration;
 }

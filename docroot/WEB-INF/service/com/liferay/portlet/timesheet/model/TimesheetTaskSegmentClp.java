@@ -70,6 +70,7 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 		attributes.put("taskId", getTaskId());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("duration", getDuration());
 
 		return attributes;
 	}
@@ -98,6 +99,12 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
 		}
 	}
 
@@ -133,6 +140,14 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 		_endDate = endDate;
 	}
 
+	public long getDuration() {
+		return _duration;
+	}
+
+	public void setDuration(long duration) {
+		_duration = duration;
+	}
+
 	public BaseModel<?> getTimesheetTaskSegmentRemoteModel() {
 		return _timesheetTaskSegmentRemoteModel;
 	}
@@ -166,6 +181,7 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 		clone.setTaskId(getTaskId());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
+		clone.setDuration(getDuration());
 
 		return clone;
 	}
@@ -222,7 +238,7 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{segmentId=");
 		sb.append(getSegmentId());
@@ -232,13 +248,15 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", duration=");
+		sb.append(getDuration());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.timesheet.model.TimesheetTaskSegment");
@@ -260,6 +278,10 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 			"<column><column-name>endDate</column-name><column-value><![CDATA[");
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>duration</column-name><column-value><![CDATA[");
+		sb.append(getDuration());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -270,5 +292,6 @@ public class TimesheetTaskSegmentClp extends BaseModelImpl<TimesheetTaskSegment>
 	private long _taskId;
 	private Date _startDate;
 	private Date _endDate;
+	private long _duration;
 	private BaseModel<?> _timesheetTaskSegmentRemoteModel;
 }
