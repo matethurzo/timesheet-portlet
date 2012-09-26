@@ -56,6 +56,7 @@ public class TimesheetTaskLocalServiceImpl
 		timesheetTask.setUserId(userId);
 		timesheetTask.setName(name);
 		timesheetTask.setDescription(description);
+		timesheetTask.setCreateDate(new Date());
 
 		timesheetTaskPersistence.update(timesheetTask, false);
 

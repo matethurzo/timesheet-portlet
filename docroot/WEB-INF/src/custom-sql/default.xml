@@ -7,6 +7,11 @@
 				*
 			FROM
 				TS_TimesheetTask
+			INNER JOIN TS_TimesheetTaskSegment
+				ON TS_TimesheetTask.taskId = TS_TimesheetTaskSegment.taskId
+			WHERE TS_TimesheetTask.userId = ?
+				AND TS_TimesheetTaskSegment.startDate > ?
+				AND TS_TimesheetTaskSegment.endDate < ?
 		]]>
 	</sql>
 </custom-sql>

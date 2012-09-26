@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.timesheet.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -47,6 +48,12 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addEntity("TimesheetTask", TimesheetTaskImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+			qPos.add(currentDate);
+			qPos.add(currentDate);
 
 			return q.list();
 		}
