@@ -97,9 +97,7 @@ public class TimesheetTaskSegmentLocalServiceImpl
 			throw new NoSuchTimesheetTaskException();
 		}
 
-		if ((startDate == null) || (endDate == null) ||
-			((endDate != null) && (startDate == null))) {
-
+		if ((startDate == null) || ((endDate != null) && (startDate == null))) {
 			throw new InvalidTaskSegmentDateException();
 		}
 

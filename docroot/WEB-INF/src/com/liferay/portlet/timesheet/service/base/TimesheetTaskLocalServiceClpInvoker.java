@@ -122,13 +122,13 @@ public class TimesheetTaskLocalServiceClpInvoker {
 
 		_methodParameterTypes53 = new String[] { "java.lang.String" };
 
-		_methodName54 = "updateDuration";
+		_methodName54 = "search";
 
-		_methodParameterTypes54 = new String[] { "long", "long" };
+		_methodParameterTypes54 = new String[] { "java.util.Date", "long" };
 
-		_methodName55 = "search";
+		_methodName55 = "updateDuration";
 
-		_methodParameterTypes55 = new String[] { "java.util.Date", "long" };
+		_methodParameterTypes55 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -243,13 +243,13 @@ public class TimesheetTaskLocalServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			return TimesheetTaskLocalServiceUtil.updateDuration(((Long)arguments[0]).longValue(),
+			return TimesheetTaskLocalServiceUtil.search((java.util.Date)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			return TimesheetTaskLocalServiceUtil.search((java.util.Date)arguments[0],
+			return TimesheetTaskLocalServiceUtil.updateDuration(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 

@@ -68,6 +68,12 @@ public class TimesheetTaskLocalServiceImpl
 		return timesheetTaskPersistence.findByName(name);
 	}
 
+	public List<TimesheetTask> search(Date date, long userId)
+			throws PortalException, SystemException {
+
+		return timesheetTaskFinder.findByC_U(date, userId);
+	}
+
 	public TimesheetTask updateDuration(long taskId, long duration)
 		throws PortalException, SystemException {
 
@@ -81,12 +87,6 @@ public class TimesheetTaskLocalServiceImpl
 		timesheetTaskPersistence.update(timesheetTask, false);
 
 		return timesheetTask;
-	}
-
-	public List<TimesheetTask> search(Date date, long userId)
-		throws PortalException, SystemException {
-
-		return timesheetTaskFinder.findByC_U(date, userId);
 	}
 
 	protected void validate(long userId, String name) throws PortalException {

@@ -248,6 +248,11 @@ public interface TimesheetTaskSegmentLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil} to access the timesheet task segment local service.
+	*/
 	public com.liferay.portlet.timesheet.model.TimesheetTaskSegment addTaskSegment(
 		long taskId, java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
