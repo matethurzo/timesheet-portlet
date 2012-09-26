@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:accordionPanel dynamic="true">
+		<p:tab id="aTab1" title="tab1">
+			<h:outputText id="tab22Text" value="#{day}" />
+		</p:tab>
+		<p:tab id="aTab2" title="tab2">
+			<h:outputText id="tab23Text" value="#{timesheetTask.getTasksByDay(day)}" />
+		</p:tab>
+		<p:tab id="aTab3" title="tab3">
+			<h:outputText id="tab24Text" value="sdasdasd" />
+		</p:tab>
+	</p:accordionPanel>
+
+</ui:composition>

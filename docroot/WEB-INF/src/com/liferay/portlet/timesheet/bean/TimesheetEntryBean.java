@@ -14,10 +14,74 @@
 
 package com.liferay.portlet.timesheet.bean;
 
+import java.util.Calendar;
+import java.util.List;
+
+import javax.faces.context.FacesContext;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portlet.timesheet.model.TimesheetTask;
+import com.liferay.portlet.timesheet.model.TimesheetTaskConstants;
+
 /**
  * @author Mate Thurzo
  */
 public class TimesheetEntryBean {
+
+	private static int monday = Calendar.MONDAY;
+	private static int tuesday = Calendar.TUESDAY;
+	private static int wednesday = Calendar.WEDNESDAY;
+	private static int thursday = Calendar.THURSDAY;
+	private static int friday = Calendar.FRIDAY;
+	private static int saturday = Calendar.SATURDAY;
+	private static int sunday = Calendar.SUNDAY;
+
+	public int getMonday() {
+		return monday;
+	}
+
+	public int getTuesday() {
+		return tuesday;
+	}
+
+	public int getWednesday() {
+		return wednesday;
+	}
+
+	public int getThursday() {
+		return thursday;
+	}
+
+	public int getFriday() {
+		return friday;
+	}
+
+	public int getSaturday() {
+		return saturday;
+	}
+
+	public int getSunday() {
+		return sunday;
+	}
+
+	public List<TimesheetTask> getTasksByDay(int day)
+		throws PortalException, SystemException {
+
+		String userId = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+		User user = UserServiceUtil.getUserById(Long.parseLong(userId));
+
+		System.out.println("UserId: " + userId + " UserName: " + user.getScreenName());
+		Calendar cal = Calendar.getInstance(user.getLocale());
+
+		cal.set(Calendar.DAY_OF_WEEK, day);
+
+		System.out.println(cal.getTime() + " WW " + cal.getFirstDayOfWeek());
+
+		return null;
+	}
 
 	public String getTimesheetCommand() {
 		return _timesheetCommand;
@@ -29,10 +93,10 @@ public class TimesheetEntryBean {
 		try {
 			//TimesheetTaskLocalServiceUtil.addTask();
 
-			return "success";
+			return TimesheetTaskConstants.SUCCESS;
 		}
 		catch (Exception e) {
-			return "error";
+			return TimesheetTaskConstants.ERROR;
 		}
 	}
 
