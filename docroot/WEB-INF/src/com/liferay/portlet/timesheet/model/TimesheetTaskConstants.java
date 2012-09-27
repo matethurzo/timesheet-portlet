@@ -15,7 +15,7 @@
 package com.liferay.portlet.timesheet.model;
 
 /**
- * @author Levente Hudák
+ * @author Levente Hud√°k
  */
 public class TimesheetTaskConstants {
 

@@ -31,42 +31,6 @@ import com.liferay.portlet.timesheet.model.TimesheetTaskConstants;
  */
 public class TimesheetEntryBean {
 
-	private static int monday = Calendar.MONDAY;
-	private static int tuesday = Calendar.TUESDAY;
-	private static int wednesday = Calendar.WEDNESDAY;
-	private static int thursday = Calendar.THURSDAY;
-	private static int friday = Calendar.FRIDAY;
-	private static int saturday = Calendar.SATURDAY;
-	private static int sunday = Calendar.SUNDAY;
-
-	public int getMonday() {
-		return monday;
-	}
-
-	public int getTuesday() {
-		return tuesday;
-	}
-
-	public int getWednesday() {
-		return wednesday;
-	}
-
-	public int getThursday() {
-		return thursday;
-	}
-
-	public int getFriday() {
-		return friday;
-	}
-
-	public int getSaturday() {
-		return saturday;
-	}
-
-	public int getSunday() {
-		return sunday;
-	}
-
 	public List<TimesheetTask> getTasksByDay(int day)
 		throws PortalException, SystemException {
 
