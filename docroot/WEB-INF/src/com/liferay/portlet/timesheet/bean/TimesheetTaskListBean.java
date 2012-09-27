@@ -18,4 +18,5 @@ package com.liferay.portlet.timesheet.bean;
  * @author Mate Thurzo
  */
 public class TimesheetTaskListBean {
+
 }

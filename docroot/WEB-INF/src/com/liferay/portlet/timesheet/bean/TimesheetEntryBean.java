@@ -14,17 +14,17 @@
 
 package com.liferay.portlet.timesheet.bean;
 
-import java.util.Calendar;
-import java.util.List;
-
-import javax.faces.context.FacesContext;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.model.TimesheetTaskConstants;
+
+import java.util.Calendar;
+import java.util.List;
+
+import javax.faces.context.FacesContext;
 
 /**
  * @author Mate Thurzo
@@ -34,10 +34,12 @@ public class TimesheetEntryBean {
 	public List<TimesheetTask> getTasksByDay(int day)
 		throws PortalException, SystemException {
 
-		String userId = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		String userId = facesContext.getExternalContext().getRemoteUser();
+
 		User user = UserServiceUtil.getUserById(Long.parseLong(userId));
 
-		System.out.println("UserId: " + userId + " UserName: " + user.getScreenName());
 		Calendar cal = Calendar.getInstance(user.getLocale());
 
 		cal.set(Calendar.DAY_OF_WEEK, day);

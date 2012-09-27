@@ -35,4 +35,5 @@ public class InvalidTimesheetCommandException extends PortalException {
 	public InvalidTimesheetCommandException(Throwable cause) {
 		super(cause);
 	}
+
 }
