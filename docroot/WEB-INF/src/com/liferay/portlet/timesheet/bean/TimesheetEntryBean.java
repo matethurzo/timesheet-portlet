@@ -14,6 +14,14 @@
 
 package com.liferay.portlet.timesheet.bean;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.timesheet.InvalidTimesheetCommandException;
+import com.liferay.portlet.timesheet.command.TimesheetCommand;
+import com.liferay.portlet.timesheet.model.TimesheetTask;
+import com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil;
+import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil;
+import com.liferay.portlet.timesheet.util.TimesheetUtil;
+
 /**
  * @author Mate Thurzo
  */
@@ -24,12 +32,36 @@ public class TimesheetEntryBean {
 	}
 
 	public String saveTask() {
-		// parse object here
-
 		try {
-			//TimesheetTaskLocalServiceUtil.addTask();
+			TimesheetCommand command = TimesheetUtil.getCommand(
+				_timesheetCommand);
+
+			if (command == null) {
+				throw new InvalidTimesheetCommandException();
+			}
+
+			TimesheetTask timesheetTask = null;
+
+			try {
+				timesheetTask = TimesheetTaskLocalServiceUtil.getTaskByName(
+					command.getTitle());
+			}
+			catch (Exception ex) {
+			}
+
+			if (timesheetTask == null) {
+				timesheetTask = TimesheetTaskLocalServiceUtil.addTask(
+					0, command.getTitle(), "Demo task");
+			}
+
+			TimesheetTaskSegmentLocalServiceUtil.addTaskSegment(
+				timesheetTask.getTaskId(), command.getStartDate(),
+				command.getEndDate());
 
 			return "success";
+		}
+		catch (PortalException pex) {
+			return "error";
 		}
 		catch (Exception e) {
 			return "error";

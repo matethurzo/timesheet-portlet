@@ -12,29 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet.timesheet;
+package com.liferay.portlet.timesheet.command;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import java.util.Date;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
-public class InvalidTaskException extends PortalException {
+public interface TimesheetCommand {
 
-	public InvalidTaskException() {
-		super();
-	}
+	public static final String TOKEN_END_TIME = "e";
+	public static final String TOKEN_START_TIME = "s";
+	public static final String TOKEN_TAGS = "x";
+	public static final String TOKEN_TITLE = "t";
 
-	public InvalidTaskException(String msg) {
-		super(msg);
-	}
+	public Date getEndDate();
 
-	public InvalidTaskException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
+	public Date getStartDate();
 
-	public InvalidTaskException(Throwable cause) {
-		super(cause);
-	}
+	public String[] getTags();
+
+	public String getTitle();
+
+	public void setEndDate(Date endDate);
+
+	public void setStartDate(Date startDate);
+
+	public void setTags(String tags[]);
+
+	public void setTitle(String title);
 
 }

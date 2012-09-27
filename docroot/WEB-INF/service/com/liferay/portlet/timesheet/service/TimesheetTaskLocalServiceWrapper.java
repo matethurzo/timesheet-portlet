@@ -270,6 +270,11 @@ public class TimesheetTaskLocalServiceWrapper
 			arguments);
 	}
 
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil} to access the timesheet task local service.
+	*/
 	public com.liferay.portlet.timesheet.model.TimesheetTask addTask(
 		long userId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -284,18 +289,18 @@ public class TimesheetTaskLocalServiceWrapper
 		return _timesheetTaskLocalService.getTaskByName(name);
 	}
 
-	public com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
-		long taskId, long duration)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _timesheetTaskLocalService.updateDuration(taskId, duration);
-	}
-
 	public java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> search(
 		java.util.Date date, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _timesheetTaskLocalService.search(date, userId);
+	}
+
+	public com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
+		long taskId, long duration)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _timesheetTaskLocalService.updateDuration(taskId, duration);
 	}
 
 	/**

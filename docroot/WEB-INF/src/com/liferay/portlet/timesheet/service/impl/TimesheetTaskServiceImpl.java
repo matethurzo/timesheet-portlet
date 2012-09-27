@@ -36,4 +36,5 @@ public class TimesheetTaskServiceImpl extends TimesheetTaskServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.portlet.timesheet.service.TimesheetTaskServiceUtil} to access the timesheet task remote service.
 	 */
+
 }
