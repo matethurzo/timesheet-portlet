@@ -1,23 +1,80 @@
 <?xml version="1.0"?>
 
-<f:view
-	xmlns="http://www.w3.org/1999/xhtml"
+<f:view xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:aui="http://liferay.com/faces/aui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
->
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<pe:importConstants className="com.liferay.portlet.timesheet.model.TimesheetTaskConstants" var="timesheetTaskConstants" />
+	<pe:importConstants className="java.util.Calendar" var="calendarConstants" />
+
+	<!-- <h:outputStylesheet library="css" name="custom.css" /> -->
+
 	<h:head />
+
 	<h:body>
+
 		<h:outputText value="#{i18n['timesheet-hello-world']}" />
 
-		<aui:form>
-			<h:inputText value="#{timesheetTask.timesheetCommand}" />
+		<aui:layout id="layout_1">
+			<aui:column id="column_1" styleClass="column-css">
+				<h:form id="form_1">
+					<aui:fieldset id="fieldSet_1">
 
-			<br />
+						<aui:field id="taskInputField_1" label="#{i18n['input-task-field']}">
+							<h:inputText id="taskInput_1" required="true" styleClass="field-css">
+								<f:ajax render="taskInputField_1" />
+							</h:inputText>
+						</aui:field>
 
-			<h:commandButton value="#{i18n['submit']}" action="#{timesheetTask.saveTask}" />
-		</aui:form>
+					</aui:fieldset>
+				</h:form>
+
+				<p:tabView id="tabView_1" dynamic="true">
+					<p:tab id="monday_tab" title="Monday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.MONDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="tuesday_tab" title="Tuesday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.TUESDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="wednesday_tab" title="Wednesday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.WEDNESDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="thursday_tab" title="Thursday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.THURSDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="friday_tab" title="Friday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.FRIDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="saturday_tab" title="Saturday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.SATURDAY}" />
+						</ui:include>
+					</p:tab>
+					<p:tab id="sunday_tab" title="Sunday">
+						<ui:include src="panelContent.xhtml">
+							<ui:param name="day" value="#{calendarConstants.SUNDAY}" />
+						</ui:include>
+					</p:tab>
+				</p:tabView>
+
+			</aui:column>
+
+		</aui:layout>
+
 	</h:body>
 </f:view>

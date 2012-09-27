@@ -14,57 +14,53 @@
 
 package com.liferay.portlet.timesheet.bean;
 
+import java.util.Calendar;
+import java.util.List;
+
+import javax.faces.context.FacesContext;
+
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.timesheet.InvalidTimesheetCommandException;
-import com.liferay.portlet.timesheet.command.TimesheetCommand;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
-import com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil;
-import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil;
-import com.liferay.portlet.timesheet.util.TimesheetUtil;
+import com.liferay.portlet.timesheet.model.TimesheetTaskConstants;
 
 /**
  * @author Mate Thurzo
  */
 public class TimesheetEntryBean {
 
+	public List<TimesheetTask> getTasksByDay(int day)
+		throws PortalException, SystemException {
+
+		String userId = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+		User user = UserServiceUtil.getUserById(Long.parseLong(userId));
+
+		System.out.println("UserId: " + userId + " UserName: " + user.getScreenName());
+		Calendar cal = Calendar.getInstance(user.getLocale());
+
+		cal.set(Calendar.DAY_OF_WEEK, day);
+
+		System.out.println(cal.getTime() + " WW " + cal.getFirstDayOfWeek());
+
+		return null;
+	}
+
 	public String getTimesheetCommand() {
 		return _timesheetCommand;
 	}
 
 	public String saveTask() {
+		// parse object here
+
 		try {
-			TimesheetCommand command = TimesheetUtil.getCommand(
-				_timesheetCommand);
+			//TimesheetTaskLocalServiceUtil.addTask();
 
-			if (command == null) {
-				throw new InvalidTimesheetCommandException();
-			}
-
-			TimesheetTask timesheetTask = null;
-
-			try {
-				timesheetTask = TimesheetTaskLocalServiceUtil.getTaskByName(
-					command.getTitle());
-			}
-			catch (Exception ex) {
-			}
-
-			if (timesheetTask == null) {
-				timesheetTask = TimesheetTaskLocalServiceUtil.addTask(
-					0, command.getTitle(), "Demo task");
-			}
-
-			TimesheetTaskSegmentLocalServiceUtil.addTaskSegment(
-				timesheetTask.getTaskId(), command.getStartDate(),
-				command.getEndDate());
-
-			return "success";
-		}
-		catch (PortalException pex) {
-			return "error";
+			return TimesheetTaskConstants.SUCCESS;
 		}
 		catch (Exception e) {
-			return "error";
+			return TimesheetTaskConstants.ERROR;
 		}
 	}
 
