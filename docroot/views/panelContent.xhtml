@@ -5,22 +5,31 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<pe:importConstants className="java.util.Collections" var="collectionsConstants" />
+
+	<ui:param name="taskList" value="#{timesheetTask.getTasksByDay(day)}" />
 
 	<p:accordionPanel dynamic="true">
-		<p:tab id="aTab1" title="tab1">
-			<c:forEach items="#{timesheetTaskList.getTaskList(day, user.currentUser.userId)}" var="task">
-				<h:outputText value="#{task.name}" />
-			</c:forEach>
 
-			<h:outputText id="tab22Text" value="#{day}" />
-		</p:tab>
-		<p:tab id="aTab2" title="tab2">
-			<h:outputText id="tab23Text" value="#{timesheetTaskList.getTaskList()}" />
-		</p:tab>
-		<p:tab id="aTab3" title="tab3">
-			<h:outputText id="tab24Text" value="sdasdasd" />
-		</p:tab>
+		<!-- Iterate the tasks -->
+		<c:if test="#{taskList} != collectionsConstants.EMPTY_LIST">
+			<c:forEach items="#{taskList}" var="task">
+	
+				<!-- Print out the header of the main LPS  -->
+				<p:tab id="#{task.id}" title="#{task.name}">
+					<c:forEach items="#{task.segments}" var="segment">
+	
+						<!-- Iterate the segments in a task -->
+						<p:tab id="#{segment.id + _tab}" title="#{segment.name}">
+							<h:outputText id="#{segment.id + _txt}" value="#{segment.description}" />
+						</p:tab>
+					</c:forEach>
+				</p:tab>
+			</c:forEach>
+		</c:if>
 	</p:accordionPanel>
 
 </ui:composition>

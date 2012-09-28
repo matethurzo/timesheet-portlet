@@ -27,8 +27,10 @@ import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUti
 import com.liferay.portlet.timesheet.util.TimesheetUtil;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -36,26 +38,58 @@ import javax.faces.context.FacesContext;
  */
 public class TimesheetEntryBean {
 
+	public boolean isUserLoggedIn() {
+
+		if (getUserId() != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public List<TimesheetTask> getTasksByDay(int day)
 		throws PortalException, SystemException {
 
-		FacesContext facesContext = FacesContext.getCurrentInstance();
+		User user = getUser();
 
-		String userId = facesContext.getExternalContext().getRemoteUser();
+//		if (user != null) {
+//			Calendar c = Calendar.getInstance(user.getLocale());
+//	
+//			c.set(Calendar.DAY_OF_WEEK, day);
+//	
+//			List<TimesheetTask> timesheetTaskList =
+//				TimesheetTaskLocalServiceUtil.search(c.getTime(), user.getUserId());
+//	
+//			if (timesheetTaskList != null) {
+//				return timesheetTaskList;
+//			}
+//		}
 
-		User user = UserServiceUtil.getUserById(Long.parseLong(userId));
-
-		Calendar cal = Calendar.getInstance(user.getLocale());
-
-		cal.set(Calendar.DAY_OF_WEEK, day);
-
-		System.out.println(cal.getTime() + " WW " + cal.getFirstDayOfWeek());
-
-		return null;
+		return Collections.emptyList();
 	}
 
 	public String getTimesheetCommand() {
 		return _timesheetCommand;
+	}
+
+	public User getUser() throws PortalException, SystemException {
+		String userId = getUserId();
+
+		if (userId != null) {
+			return UserServiceUtil.getUserById(Long.parseLong(userId));
+		}
+
+		return null;
+	}
+
+	public String getUserId() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		ExternalContext externalContext= facesContext.getExternalContext();
+
+		String userId = externalContext.getRemoteUser();
+
+		return userId;
 	}
 
 	public String saveTask() {
