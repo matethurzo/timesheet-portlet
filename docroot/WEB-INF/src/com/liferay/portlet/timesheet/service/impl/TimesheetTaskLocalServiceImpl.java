@@ -69,12 +69,6 @@ public class TimesheetTaskLocalServiceImpl
 		return timesheetTaskPersistence.findByName(name);
 	}
 
-	public List<TimesheetTask> search(Date date, long userId)
-			throws PortalException, SystemException {
-
-		return timesheetTaskFinder.findByC_U(date, userId);
-	}
-
 	public TimesheetTask updateDuration(long taskId, long duration)
 		throws PortalException, SystemException {
 

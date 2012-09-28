@@ -17,13 +17,16 @@ package com.liferay.portlet.timesheet.service.persistence;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.model.impl.TimesheetTaskImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,7 +38,7 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 	public static final String FIND_BY_C_U =
 		TimesheetTaskFinder.class.getName() + ".findByC_U";
 
-	public List<TimesheetTask> findByC_U(Date currentDate, long userId)
+	public List<Object[]> findByC_U(Date currentDate, long userId)
 		throws SystemException {
 
 		Session session = null;
@@ -47,7 +50,8 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addEntity("TimesheetTask", TimesheetTaskImpl.class);
+			q.addScalar("taskId", Type.LONG);
+			q.addScalar("segmentId", Type.STRING);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -55,7 +59,15 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 			qPos.add(currentDate);
 			qPos.add(currentDate);
 
-			return q.list();
+			Iterator<Object[]> itr = q.iterate();
+
+			List<Object[]> resultList = new ArrayList<Object[]>();
+
+			while (itr.hasNext()) {
+				resultList.add(itr.next());
+			}
+
+			return resultList;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

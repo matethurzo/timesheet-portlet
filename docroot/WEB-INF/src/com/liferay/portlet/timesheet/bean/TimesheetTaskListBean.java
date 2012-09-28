@@ -14,9 +14,70 @@
 
 package com.liferay.portlet.timesheet.bean;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.timesheet.model.TimesheetTask;
+import com.liferay.portlet.timesheet.model.TimesheetTaskSegment;
+import com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil;
+import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil;
+import com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinderUtil;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Mate Thurzo
  */
 public class TimesheetTaskListBean {
+
+	public Map<TimesheetTask, List<TimesheetTaskSegment>> getTaskList(
+		int day, long userId) {
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.set(Calendar.DAY_OF_WEEK, day);
+
+		try {
+			List<Object[]> taskListIds = TimesheetTaskFinderUtil.findByC_U(
+				calendar.getTime(), userId);
+
+			Map<TimesheetTask, List<TimesheetTaskSegment>> taskListMap =
+				new HashMap<TimesheetTask, List<TimesheetTaskSegment>>();
+
+			if (taskListIds.isEmpty()) {
+				return taskListMap;
+			}
+
+			for (Object[] taskListIdPair : taskListIds) {
+				long taskId = (Long)taskListIdPair[0];
+				long segmentId = (Long)taskListIdPair[1];
+
+				TimesheetTask task =
+					TimesheetTaskLocalServiceUtil.getTimesheetTask(taskId);
+				TimesheetTaskSegment taskSegment =
+					TimesheetTaskSegmentLocalServiceUtil.
+						getTimesheetTaskSegment(segmentId);
+
+				List<TimesheetTaskSegment> segmentList = null;
+
+				if (taskListMap.containsKey(task)) {
+					segmentList = taskListMap.get(task);
+				}
+				else {
+					segmentList = new ArrayList<TimesheetTaskSegment>();
+				}
+
+				segmentList.add(taskSegment);
+			}
+
+			return taskListMap;
+		}
+		catch (Exception se) {
+			return null;
+		}
+	}
 
 }

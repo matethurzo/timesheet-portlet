@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Mate Thurzo
  */
 public class TimesheetTaskFinderUtil {
-	public static java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> findByC_U(
+	public static java.util.List<java.lang.Object[]> findByC_U(
 		java.util.Date currentDate, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByC_U(currentDate, userId);

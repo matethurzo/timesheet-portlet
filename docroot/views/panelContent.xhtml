@@ -9,10 +9,14 @@
 
 	<p:accordionPanel dynamic="true">
 		<p:tab id="aTab1" title="tab1">
+			<c:forEach items="#{timesheetTaskList.getTaskList(day, user.currentUser.userId)}" var="task">
+				<h:outputText value="#{task.name}" />
+			</c:forEach>
+
 			<h:outputText id="tab22Text" value="#{day}" />
 		</p:tab>
 		<p:tab id="aTab2" title="tab2">
-			<h:outputText id="tab23Text" value="#{timesheetTask.getTasksByDay(day)}" />
+			<h:outputText id="tab23Text" value="#{timesheetTaskList.getTaskList()}" />
 		</p:tab>
 		<p:tab id="aTab3" title="tab3">
 			<h:outputText id="tab24Text" value="sdasdasd" />

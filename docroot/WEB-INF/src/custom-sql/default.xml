@@ -4,7 +4,7 @@
 	<sql id="com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinder.findByC_U">
 		<![CDATA[
 			SELECT
-				*
+				TS_TimesheetTask.taskId, segmentId
 			FROM
 				TS_TimesheetTask
 			INNER JOIN TS_TimesheetTaskSegment

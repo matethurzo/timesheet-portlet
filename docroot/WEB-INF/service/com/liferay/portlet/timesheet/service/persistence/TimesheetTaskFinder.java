@@ -18,7 +18,7 @@ package com.liferay.portlet.timesheet.service.persistence;
  * @author Mate Thurzo
  */
 public interface TimesheetTaskFinder {
-	public java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> findByC_U(
+	public java.util.List<java.lang.Object[]> findByC_U(
 		java.util.Date currentDate, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -289,13 +289,6 @@ public class TimesheetTaskLocalServiceWrapper
 		return _timesheetTaskLocalService.getTaskByName(name);
 	}
 
-	public java.util.List<com.liferay.portlet.timesheet.model.TimesheetTask> search(
-		java.util.Date date, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _timesheetTaskLocalService.search(date, userId);
-	}
-
 	public com.liferay.portlet.timesheet.model.TimesheetTask updateDuration(
 		long taskId, long duration)
 		throws com.liferay.portal.kernel.exception.PortalException,
