@@ -24,14 +24,14 @@
 			<aui:column id="column_1" styleClass="column-css">
 				<h:form id="form_1">
 					<aui:fieldset id="fieldSet_1">
-
 						<aui:field id="taskInputField_1" label="#{i18n['input-task-field']}">
-							<h:inputText id="taskInput_1" required="true" styleClass="field-css">
+							<h:inputText id="taskInput_1" required="true" styleClass="field-css" value="#{timesheetTask.timesheetCommand}">
 								<f:ajax render="taskInputField_1" />
 							</h:inputText>
 						</aui:field>
-
 					</aui:fieldset>
+
+					<h:commandButton action="#{timesheetTask.saveTask}" value="Submit" />
 				</h:form>
 
 				<p:tabView id="tabView_1" dynamic="true">

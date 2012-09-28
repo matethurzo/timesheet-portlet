@@ -15,11 +15,13 @@
 		<managed-bean-class>com.liferay.portlet.timesheet.bean.TimesheetEntryBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+
 	<managed-bean>
 		<managed-bean-name>user</managed-bean-name>
 		<managed-bean-class>com.liferay.portlet.timesheet.bean.UserBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+
 	<managed-bean>
 		<managed-bean-name>timesheetTaskList</managed-bean-name>
 		<managed-bean-class>com.liferay.portlet.timesheet.bean.TimesheetTaskListBean</managed-bean-class>

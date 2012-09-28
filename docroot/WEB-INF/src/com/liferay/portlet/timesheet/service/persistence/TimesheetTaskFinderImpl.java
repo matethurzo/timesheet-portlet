@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
-import com.liferay.portlet.timesheet.model.impl.TimesheetTaskImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.sql.Timestamp;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +44,17 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 	public List<Object[]> findByC_U(Date currentDate, long userId)
 		throws SystemException {
 
+		Calendar currentDateGT = Calendar.getInstance();
+		Calendar currentDateLT = Calendar.getInstance();
+
+		currentDateGT.setTime(currentDate);
+		currentDateLT.setTime(currentDate);
+
+		Timestamp currentDateGT_TS = CalendarUtil.getTimestamp(
+			CalendarUtil.getGTDate(currentDateGT));
+		Timestamp currentDateLT_TS = CalendarUtil.getTimestamp(
+			CalendarUtil.getLTDate(currentDateLT));
+
 		Session session = null;
 
 		try {
@@ -51,13 +65,13 @@ public class TimesheetTaskFinderImpl extends BasePersistenceImpl<TimesheetTask>
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar("taskId", Type.LONG);
-			q.addScalar("segmentId", Type.STRING);
+			q.addScalar("segmentId", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(userId);
-			qPos.add(currentDate);
-			qPos.add(currentDate);
+			qPos.add(0);
+			qPos.add(currentDateGT_TS);
+			qPos.add(currentDateLT_TS);
 
 			Iterator<Object[]> itr = q.iterate();
 

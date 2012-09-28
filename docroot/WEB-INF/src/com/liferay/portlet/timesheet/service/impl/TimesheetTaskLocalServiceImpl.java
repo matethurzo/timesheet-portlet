@@ -63,6 +63,12 @@ public class TimesheetTaskLocalServiceImpl
 		return timesheetTask;
 	}
 
+	public List<Object[]> getTaskIdsByDate(Date currentDate, long userId)
+		throws SystemException {
+
+		return timesheetTaskFinder.findByC_U(currentDate, userId);
+	}
+
 	public TimesheetTask getTaskByName(String name)
 		throws PortalException, SystemException {
 

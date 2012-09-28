@@ -258,6 +258,11 @@ public interface TimesheetTaskLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Object[]> getTaskIdsByDate(
+		java.util.Date currentDate, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.timesheet.model.TimesheetTask getTaskByName(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

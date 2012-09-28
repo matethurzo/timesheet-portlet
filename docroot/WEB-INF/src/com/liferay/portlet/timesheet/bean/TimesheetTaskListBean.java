@@ -14,16 +14,13 @@
 
 package com.liferay.portlet.timesheet.bean;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.model.TimesheetTaskSegment;
 import com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil;
 import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil;
-import com.liferay.portlet.timesheet.service.persistence.TimesheetTaskFinderUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +38,9 @@ public class TimesheetTaskListBean {
 		calendar.set(Calendar.DAY_OF_WEEK, day);
 
 		try {
-			List<Object[]> taskListIds = TimesheetTaskFinderUtil.findByC_U(
-				calendar.getTime(), userId);
+			List<Object[]> taskListIds =
+				TimesheetTaskLocalServiceUtil.getTaskIdsByDate(
+					calendar.getTime(), userId);
 
 			Map<TimesheetTask, List<TimesheetTaskSegment>> taskListMap =
 				new HashMap<TimesheetTask, List<TimesheetTaskSegment>>();
@@ -71,11 +69,15 @@ public class TimesheetTaskListBean {
 				}
 
 				segmentList.add(taskSegment);
+
+				taskListMap.put(task, segmentList);
 			}
 
 			return taskListMap;
 		}
 		catch (Exception se) {
+			System.out.println(se);
+
 			return null;
 		}
 	}

@@ -285,6 +285,12 @@ public class TimesheetTaskLocalServiceUtil {
 		return getService().addTask(userId, name, description);
 	}
 
+	public static java.util.List<java.lang.Object[]> getTaskIdsByDate(
+		java.util.Date currentDate, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTaskIdsByDate(currentDate, userId);
+	}
+
 	public static com.liferay.portlet.timesheet.model.TimesheetTask getTaskByName(
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
