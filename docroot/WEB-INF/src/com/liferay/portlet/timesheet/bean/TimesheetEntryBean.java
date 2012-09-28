@@ -18,8 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portlet.timesheet.InvalidTimesheetCommandException;
+import com.liferay.portlet.timesheet.command.TimesheetCommand;
 import com.liferay.portlet.timesheet.model.TimesheetTask;
 import com.liferay.portlet.timesheet.model.TimesheetTaskConstants;
+import com.liferay.portlet.timesheet.service.TimesheetTaskLocalServiceUtil;
+import com.liferay.portlet.timesheet.service.TimesheetTaskSegmentLocalServiceUtil;
+import com.liferay.portlet.timesheet.util.TimesheetUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,12 +59,36 @@ public class TimesheetEntryBean {
 	}
 
 	public String saveTask() {
-		// parse object here
-
 		try {
-			//TimesheetTaskLocalServiceUtil.addTask();
+			TimesheetCommand command = TimesheetUtil.getCommand(
+				_timesheetCommand);
+
+			if (command == null) {
+				throw new InvalidTimesheetCommandException();
+			}
+
+			TimesheetTask timesheetTask = null;
+
+			try {
+				timesheetTask = TimesheetTaskLocalServiceUtil.getTaskByName(
+					command.getTitle());
+			}
+			catch (Exception ex) {
+			}
+
+			if (timesheetTask == null) {
+				timesheetTask = TimesheetTaskLocalServiceUtil.addTask(
+					0, command.getTitle(), "Demo task");
+			}
+
+			TimesheetTaskSegmentLocalServiceUtil.addTaskSegment(
+				timesheetTask.getTaskId(), command.getStartDate(),
+				command.getEndDate());
 
 			return TimesheetTaskConstants.SUCCESS;
+		}
+		catch (PortalException pex) {
+			return TimesheetTaskConstants.ERROR;
 		}
 		catch (Exception e) {
 			return TimesheetTaskConstants.ERROR;
