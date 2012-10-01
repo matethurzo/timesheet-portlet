@@ -12,69 +12,70 @@
 	<pe:importConstants className="com.liferay.portlet.timesheet.model.TimesheetTaskConstants" var="timesheetTaskConstants" />
 	<pe:importConstants className="java.util.Calendar" var="calendarConstants" />
 
-	<!-- <h:outputStylesheet library="css" name="custom.css" /> -->
-
 	<h:head />
 
 	<h:body>
+		<c:choose>
+			<c:when test="#{user.getCurrentUser() ne null}">
+				<aui:layout id="layout_1">
+					<aui:column id="column_1">
+						<h:form id="form_1">
+							<p:fieldset id="fieldSet_1">
+								<aui:field id="taskInputField_1" label="#{i18n['input-task-field']}">
+									<p:inputText style="width:80%" id="taskInput_1" required="true" value="#{timesheetTask.timesheetCommand}">
+										<f:ajax render="taskInputField_1" />
+									</p:inputText>
 
-		<h:outputText value="#{i18n['timesheet-hello-world']}" />
+									<p:commandButton action="#{timesheetTask.saveTask}" value="Submit" />
+								</aui:field>
+							</p:fieldset>
+						</h:form>
 
-		<aui:layout id="layout_1">
-			<aui:column id="column_1" styleClass="column-css">
-				<h:form id="form_1">
-					<aui:fieldset id="fieldSet_1">
-						<aui:field id="taskInputField_1" label="#{i18n['input-task-field']}">
-							<h:inputText id="taskInput_1" required="true" styleClass="field-css" value="#{timesheetTask.timesheetCommand}">
-								<f:ajax render="taskInputField_1" />
-							</h:inputText>
-						</aui:field>
-					</aui:fieldset>
+						<p:tabView id="tabView_1" dynamic="true">
+							<p:tab id="monday_tab" title="Monday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.MONDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="tuesday_tab" title="Tuesday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.TUESDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="wednesday_tab" title="Wednesday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.WEDNESDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="thursday_tab" title="Thursday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.THURSDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="friday_tab" title="Friday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.FRIDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="saturday_tab" title="Saturday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.SATURDAY}" />
+								</ui:include>
+							</p:tab>
+							<p:tab id="sunday_tab" title="Sunday">
+								<ui:include src="panelContent.xhtml">
+									<ui:param name="day" value="#{calendarConstants.SUNDAY}" />
+								</ui:include>
+							</p:tab>
+						</p:tabView>
 
-					<h:commandButton action="#{timesheetTask.saveTask}" value="Submit" />
-				</h:form>
+					</aui:column>
 
-				<p:tabView id="tabView_1" dynamic="true">
-					<p:tab id="monday_tab" title="Monday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.MONDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="tuesday_tab" title="Tuesday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.TUESDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="wednesday_tab" title="Wednesday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.WEDNESDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="thursday_tab" title="Thursday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.THURSDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="friday_tab" title="Friday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.FRIDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="saturday_tab" title="Saturday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.SATURDAY}" />
-						</ui:include>
-					</p:tab>
-					<p:tab id="sunday_tab" title="Sunday">
-						<ui:include src="panelContent.xhtml">
-							<ui:param name="day" value="#{calendarConstants.SUNDAY}" />
-						</ui:include>
-					</p:tab>
-				</p:tabView>
-
-			</aui:column>
-
-		</aui:layout>
-
+				</aui:layout>
+			</c:when>
+			<c:otherwise>
+				<h:outputText value="#{i18n['please-log-in']}" />
+			</c:otherwise>
+		</c:choose>
 	</h:body>
 </f:view>
