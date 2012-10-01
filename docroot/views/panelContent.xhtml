@@ -14,9 +14,10 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach items="#{timesheetTaskList.getTaskList(day, user.currentUser.userId)}" var="task">
-					<p:tab id="aTab1" title="#{task.key.name}">
+					<p:tab title="#{task.key.name}">
+						<h:outputText value="Overall duration on " /><h:outputLink target="_blank" value="http://issues.liferay.com/browse/#{task.key.name}">#{task.key.name}</h:outputLink><h:outputText value=" is #{task.key.duration}" />
 						<p:dataList value="#{task.value}" var="segment" itemType="square">
-							#{segment.startDate} - #{segment.endDate}
+							 #{segment.startDate} - #{segment.endDate}
 						</p:dataList>
 					</p:tab>
 				</c:forEach>
